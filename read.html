@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning htmx</title>
+    <script src="https://unpkg.com/htmx.org@1.8.2"></script>
+    <style>
+        body {
+            font-family: cursive;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        a{
+          text-decoration: none;
+          font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <h1>Learning htmx</h1>
+    <p>Learning htmx can significantly enhance your ability to create dynamic, modern web applications. Here’s a step-by-step guide to help you get started with htmx, including practice exercises:</p>
+    
+    <h2>Step 1: Understand What htmx Is</h2>
+    <p><strong>htmx</strong> is a JavaScript library that allows you to perform AJAX requests and update parts of a web page without writing JavaScript code explicitly. It’s designed to be simple and provide a way to build modern web applications with minimal JavaScript.</p>
+    
+    <h2>Step 2: Set Up Your Environment</h2>
+    <ol>
+        <li><strong>Include htmx in Your Project</strong>
+            <p>You can include htmx in your project by adding it via a CDN. Add this line in the <code>&lt;head&gt;</code> of your HTML file:</p>
+            <pre><code>&lt;script src="https://unpkg.com/htmx.org@1.8.2"&gt;&lt;/script&gt;</code></pre>
+        </li>
+        <li><strong>Basic HTML Structure</strong>
+            <p>Create a simple HTML file to start experimenting:</p>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;htmx Example&lt;/title&gt;
+    &lt;script src="https://unpkg.com/htmx.org@1.8.2"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to htmx&lt;/h1&gt;
+    &lt;!-- Add your content here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </li>
+    </ol>
+    
+    <h2>Step 3: Basic htmx Concepts</h2>
+    <ol>
+        <li><strong>Triggering Requests</strong>
+            <p>htmx allows you to make requests and update the DOM based on user interactions. Start by adding a button that triggers a request:</p>
+            <pre><code>&lt;button hx-get="/hello" hx-target="#response"&gt;Click Me&lt;/button&gt;
+&lt;div id="response"&gt;&lt;/div&gt;</code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><code>hx-get="/hello"</code> specifies that a GET request will be sent to <code>/hello</code> when the button is clicked.</li>
+                <li><code>hx-target="#response"</code> specifies that the response will be inserted into the element with the id <code>response</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Server Response</strong>
+            <p>Create a server that handles the <code>/hello</code> endpoint. For a quick example using Python with Flask:</p>
+            <pre><code>from flask import Flask, render_template_string
+
+app = Flask(__name__)
+
+@app.route('/hello')
+def hello():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run(debug=True)</code></pre>
+        </li>
+        <li><strong>Updating Parts of the Page</strong>
+            <p>You can also use htmx to update only parts of a page without a full page reload:</p>
+            <pre><code>&lt;button hx-get="/update-content" hx-target="#content"&gt;Update Content&lt;/button&gt;
+&lt;div id="content"&gt;Original Content&lt;/div&gt;</code></pre>
+            <p>On the server side, return new content:</p>
+            <pre><code>@app.route('/update-content')
+def update_content():
+    return 'Updated Content'</code></pre>
+        </li>
+    </ol>
+    
+    <h2>Step 4: Advanced htmx Features</h2>
+    <ol>
+        <li><strong>Using Different Request Methods</strong>
+            <p>You can use <code>hx-post</code>, <code>hx-put</code>, and <code>hx-delete</code> to send POST, PUT, and DELETE requests respectively:</p>
+            <pre><code>&lt;button hx-post="/submit" hx-target="#response"&gt;Submit&lt;/button&gt;</code></pre>
+            <p>Handle the request on the server:</p>
+            <pre><code>@app.route('/submit', methods=['POST'])
+def submit():
+    return 'Form Submitted'</code></pre>
+        </li>
+        <li><strong>Using hx-trigger</strong>
+            <p><code>hx-trigger</code> can be used to specify different events that trigger requests:</p>
+            <pre><code>&lt;input type="text" hx-get="/search" hx-target="#results" hx-trigger="keyup changed delay:500ms"&gt;
+&lt;div id="results"&gt;&lt;/div&gt;</code></pre>
+        </li>
+        <li><strong>Handling Responses</strong>
+            <p>You can use <code>hx-swap</code> to control how the response is inserted into the DOM. By default, it replaces the target content, but you can also use <code>beforebegin</code>, <code>afterbegin</code>, <code>beforeend</code>, and <code>afterend</code>:</p>
+            <pre><code>&lt;button hx-get="/append-content" hx-target="#container" hx-swap="afterend"&gt;Append Content&lt;/button&gt;
+&lt;div id="container"&gt;Container&lt;/div&gt;</code></pre>
+            <p>Return content with server:</p>
+            <pre><code>@app.route('/append-content')
+def append_content():
+    return '&lt;p&gt;Appended Content&lt;/p&gt;'</code></pre>
+        </li>
+    </ol>
+    
+    <h2>Step 5: Practice Exercises</h2>
+    <ol>
+        <li><strong>Simple Button Click</strong>
+            <p>Create a button that fetches and displays a random joke.</p>
+        </li>
+        <li><strong>Form Submission</strong>
+            <p>Build a form that submits data via <code>hx-post</code> and displays the response.</p>
+        </li>
+        <li><strong>Dynamic Content Loading</strong>
+            <p>Implement a search input that dynamically fetches search results from a server endpoint as you type.</p>
+        </li>
+        <li><strong>Pagination</strong>
+            <p>Create a list of items with pagination controls using htmx to load more items.</p>
+        </li>
+    </ol>
+    
+    <h2>Summary</h2>
+    <p>If you want to learn more use <a href="https://chatgpt.com/" target="_blank">ChatGpt</a> or use the <a href="https://htmx.org/" target="_blank">Htmx</a> Documentation</p>
+</body>
+</html>
