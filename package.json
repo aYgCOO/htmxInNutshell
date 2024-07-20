@@ -1,0 +1,19 @@
+{
+  "name": "htmxinnutshell",
+  "version": "1.0.0",
+  "description": "htmx is a library that allows you to access modern browser features directly from HTML, rather than using javascript.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
